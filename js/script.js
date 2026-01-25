@@ -113,5 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setRes('wide-prob', 'wide-return', output.wide_hit, output.wide_roi);
         setRes('tan-prob', 'tan-return', output.exacta_hit, output.exacta_roi);
         setRes('fuku3-prob', 'fuku3-return', output.trio_hit, output.trio_roi);
+        setRes('fuku3tan-prob', 'fuku3tan-return', output.trifecta_hit, output.trifecta_roi);
     }
 });
