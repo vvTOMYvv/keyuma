@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>キー馬診断 | 競馬の回収率・的中率をデータ分析</title>
+    <meta name="description" content="キー馬（軸馬）を選ぶだけで、過去15年以上のレース結果から回収率・的中率を瞬時に集計。あなたの選んだキー馬の期待値をデータで診断し、最適な買い方を提案します。">
+    <meta name="keywords" content="競馬,分析,回収率,的中率,キー馬,シミュレーター,データ競馬,キー馬診断">
+    <meta property="og:title" content="キー馬診断 | キー馬の期待値をデータで解析">
+    <meta property="og:description" content="あなたの選んだキー馬は勝てるのか？過去の膨大なデータから的中率・回収率を即座に診断。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/"> <meta property="og:image" content="https://your-domain.com/img/ogp-image.png"> <meta property="og:site_name" content="キー馬診断">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="キー馬診断 | データ競馬分析ツール">
+    <meta name="twitter:description" content="過去データからキー馬の期待値を瞬時に算出。根拠のある馬券検討をサポートします。">
+    
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo" style="text-decoration: none;">
+                <span class="logo-main">キー馬</span><span class="logo-sub">診断</span>
+            </a>
+            <p class="tagline">過去データから軸馬の期待値を解析</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>診断結果</h1>
+
+        <section class="result-section">
+            <div class="section-header">
+                <span class="step-number">✓</span>
+                <h3>選択した条件</h3>
+            </div>
+            <div class="condition-badge-container">
+                <div class="badge badge-jiku">キー馬: <span id="res-jiku">--</span>人気</div>
+                <div class="badge badge-jiku">ペア馬: <span id="res-pair">--</span></div>
+                
+                <div class="badge badge-filter">会場: <span id="res-venue">--</span></div>
+                <div class="badge badge-filter">コース: <span id="res-course_type">--</span></div>
+                <div class="badge badge-filter">距離: <span id="res-distance">--</span></div>
+                <div class="badge badge-filter">馬場: <span id="res-track">--</span></div>
+                
+                <div class="badge badge-filter">年齢: <span id="res-age">--</span></div>
+                <div class="badge badge-filter">クラス: <span id="res-class">--</span></div>
+                <div class="badge badge-filter">斤量: <span id="res-race_condition">--</span></div>
+            </div>
+        </section>
+
+        <div class="sub-info">
+            過去15年のデータから <strong><span id="res-count">--</span></strong> レースを分析
+        </div>
+
+        <section class="result-section">
+            <div class="section-header">
+                <span class="step-number">📊</span>
+                <h3>馬券種別 期待値</h3>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">単勝</div>
+                <div class="result-values">
+                    <span class="probability-value" id="win-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="win-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">複勝</div>
+                <div class="result-values">
+                    <span class="probability-value" id="place-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="place-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">馬連</div>
+                <div class="result-values">
+                    <span class="probability-value" id="ren-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="ren-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">ワイド</div>
+                <div class="result-values">
+                    <span class="probability-value" id="wide-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="wide-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">馬単</div>
+                <div class="result-values">
+                    <span class="probability-value" id="tan-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="tan-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">3連複</div>
+                <div class="result-values">
+                    <span class="probability-value" id="fuku3-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="fuku3-return">--</span>%</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">3連単</div>
+                <div class="result-values">
+                    <span class="probability-value" id="fuku3tan-prob">--%</span>
+                    <span class="return-rate">回収率: <span id="fuku3tan-return">--</span>%</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="action-area">
+            <a href="index.html" id="submit-btn" style="text-decoration: none; display: block; text-align: center;">条件を変えて再診断</a>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <p class="footer-logo">キー馬診断</p>
+            <p class="copyright">&copy; 2026 キー馬診断 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

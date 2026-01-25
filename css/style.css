@@ -1,0 +1,251 @@
+/* --- 1. 変数定義 --- */
+:root {
+    --primary-color: #27ae60;    /* 芝グリーン */
+    --primary-light: #eafaf1;
+    --secondary-color: #2c3e50;  /* 信頼ネイビー */
+    --accent-color: #e67e22;     /* 診断オレンジ */
+    --bg-color: #f0f2f5;         /* 背景グレー */
+    --surface-color: #ffffff;    /* 白背景 */
+    --text-color: #333333;
+    --text-light: #7f8c8d;
+    --border-color: #e0e0e0;
+    --danger-color: #e63946;     /* 強調・期待値用 */
+    --font-main: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+/* --- 2. ベース（リセット後の再定義） --- */
+* { box-sizing: border-box; }
+
+body {
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 3. ヘッダー・フッター --- */
+.main-header {
+    background-color: var(--surface-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo { font-size: 24px; font-weight: 900; text-decoration: none; }
+.logo-main { color: var(--secondary-color); }
+.logo-sub {
+    color: var(--primary-color);
+    background: var(--primary-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 2px;
+}
+
+.main-footer {
+    background-color: var(--secondary-color);
+    color: #ecf0f1;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+/* --- 4. メインコンテナ --- */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background: var(--surface-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--secondary-color);
+    font-weight: 900;
+}
+
+section { margin-bottom: 40px; }
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+}
+
+.step-number {
+    background: var(--secondary-color);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+    font-size: 12px;
+}
+
+h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
+
+/* --- 5. 選択グリッド（入力用） --- */
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.selection-item input { position: absolute; opacity: 0; }
+.selection-item label {
+    display: block;
+    background: #fff;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.selection-item input:checked + label {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
+}
+
+/* --- 6. 診断結果表示用パーツ（追加） --- */
+.result-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    font-size: 16px;
+}
+
+.result-values {
+    text-align: right;
+}
+
+.probability-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--danger-color);
+}
+
+.return-rate {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/* 条件バッジ（診断された条件をきれいに並べる） */
+.condition-badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-jiku { background: var(--secondary-color); color: #fff; }
+.badge-filter { background: #fff; border: 1px solid var(--border-color); color: var(--text-color); }
+
+/* --- 7. フィルタ・フォーム --- */
+.filter-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.input-group { display: flex; flex-direction: column; }
+.input-group label {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--text-light);
+}
+
+.full-width { grid-column: span 2; }
+
+select {
+    padding: 10px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* --- 8. ボタン --- */
+button#submit-btn, .btn-back {
+    width: 100%;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color), #2ecc71);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.2);
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-back {
+    background: var(--text-light);
+    margin-top: 20px;
+    box-shadow: none;
+}
+
+/* --- 9. レスポンシブ --- */
+@media screen and (max-width: 768px) {
+    .container { padding: 20px; margin: 15px 10px; }
+    .selection-grid { grid-template-columns: repeat(3, 1fr); }
+    .filter-grid { grid-template-columns: 1fr; }
+    .full-width { grid-column: span 1; }
+    .header-inner { flex-direction: column; text-align: center; }
+}

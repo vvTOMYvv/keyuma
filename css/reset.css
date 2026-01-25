@@ -1,0 +1,40 @@
+/* 1. ボックスモデルを直感的に（パディングを含めた幅計算に） */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. ブラウザが勝手につけるマージンを最小限にリセット */
+body, h1, h2, h3, p, figure {
+    margin: 0;
+}
+
+/* 3. リストのポッチを消す */
+ul, ol {
+    list-style: none;
+    padding: 0;
+}
+
+/* 4. 画像の隙間問題を解消し、はみ出しを防ぐ */
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: bottom;
+}
+
+/* 5. フォーム要素のフォントを親（body）から継承させる 
+   ※これがないとinput内だけフォントが変わってしまうのを防ぎます */
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+}
+
+/* 6. ボタンやセレクトボックスのブラウザ標準デザイン（立体感など）をリセット */
+button, select {
+    background: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
