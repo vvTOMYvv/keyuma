@@ -90,7 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 条件の反映 (HTMLの各IDに流し込む)
         setTxt('res-jiku', input.jiku);
-        setTxt('res-pair', input.aite_list && input.aite_list.length > 0 ? input.aite_list.join(', ') : 'なし');
+        const pairVal = (input.aite_list && input.aite_list.length > 0) 
+            ? input.aite_list.join(', ') + '番人気' 
+            : 'なし';
+        setTxt('res-pair', pairVal);
         setTxt('res-venue', input.venue);
         setTxt('res-course_type', input.course_type);
         setTxt('res-distance', input.distance ? `${input.distance}m` : '全距離');

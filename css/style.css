@@ -56,7 +56,7 @@ body {
 .main-footer {
     background-color: var(--secondary-color);
     color: #ecf0f1;
-    padding: 40px 0 20px;
+    padding: 30px 0;
     margin-top: 60px;
     text-align: center;
 }
@@ -285,7 +285,7 @@ button#submit-btn, .btn-back {
 .logic-disclaimer {
     margin-top: 15px; /* ボタンとの間隔 */
     padding: 0 10px;
-    font-size: 11px; /* 小さくさりげなく */
+    font-size: 12px; /* 小さくさりげなく */
     color: #95a5a6;  /* 目立ちすぎないグレー */
     line-height: 1.5;
     text-align: left; /* 左揃えで箇条書き感を出す */
@@ -297,43 +297,37 @@ button#submit-btn, .btn-back {
     padding-left: 1em;
 }
 
-/* ボタンエリアを画面下部に固定（大胆な変更） */
 .sticky-action-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: -webkit-sticky; /* Safari用 */
+    position: sticky;
+    bottom: 20px; /* 画面下部との余白 */
     width: 100%;
-    padding: 15px 20px 30px; /* 下側に余裕を持たせる（iPhoneのバー対策） */
-    background: rgba(255, 255, 255, 0.9); /* 少し透ける白 */
-    backdrop-filter: blur(5px); /* 背景をぼかすとお洒落 */
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    max-width: 500px; /* ボタンの最大幅に合わせる */
+    margin: 40px auto 20px; /* 上下に余白を持たせる */
+    padding: 0 20px;
     z-index: 100;
 }
 
-/* ボタン自体のデザイン */
 .primary-re-btn {
     display: block;
-    max-width: 500px; /* PCで見ても広がりすぎない */
-    margin: 0 auto;
-    background: #e67e22; /* 活気のあるオレンジ（再試行を促す色） */
+    background: #e67e22;
     color: #fff;
     text-align: center;
     padding: 18px;
-    border-radius: 50px; /* 丸みを持たせてモダンに */
+    border-radius: 50px;
     font-size: 18px;
     font-weight: 800;
     text-decoration: none;
-    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
-    transition: transform 0.2s;
+    box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3); /* 影を少し柔らかく */
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .primary-re-btn:active {
     transform: scale(0.95); /* 押した時に少し凹む演出 */
 }
 
-/* ボタンがコンテンツを隠さないように余白を追加 */
 .container {
-    padding-bottom: 120px; 
+    padding-bottom: 20px; 
 }
 
 .btn-back {
