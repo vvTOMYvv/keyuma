@@ -3,20 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>キー馬診断 | 競馬の回収率・的中率をデータ分析</title>
-    <meta name="description" content="キー馬（軸馬）を選ぶだけで、過去15年以上のレース結果から回収率・的中率を瞬時に集計。あなたの選んだキー馬の期待値をデータで診断し、最適な買い方を提案します。">
-    <meta name="keywords" content="競馬,分析,回収率,的中率,キー馬,シミュレーター,データ競馬,キー馬診断">
-    <meta property="og:title" content="キー馬診断 | キー馬の期待値をデータで解析">
-    <meta property="og:description" content="あなたの選んだキー馬は勝てるのか？過去の膨大なデータから的中率・回収率を即座に診断。">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-domain.com/"> <meta property="og:image" content="https://your-domain.com/img/ogp-image.png"> <meta property="og:site_name" content="キー馬診断">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="キー馬診断 | データ競馬分析ツール">
-    <meta name="twitter:description" content="過去データからキー馬の期待値を瞬時に算出。根拠のある馬券検討をサポートします。">
-    
+    <title>推し馬プラス | 競馬の回収率・的中率をデータ分析</title>
+    <meta name="description" content="推し馬（軸馬）を選ぶだけで、過去15年以上のレース結果から回収率・的中率を瞬時に集計。あなたの選んだ推し馬の最適な買い方を提案します。">
+    <meta name="keywords" content="競馬,分析,回収率,的中率,推し馬,シミュレーター">
     <link rel="icon" href="favicon.ico">
-
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,19 +15,22 @@
     <header class="main-header">
         <div class="header-inner">
             <div class="logo">
-                <span class="logo-main">キー馬</span><span class="logo-sub">診断</span>
+                <span class="logo-main">推し馬</span><span class="logo-sub">プラス</span>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <h1>競馬レース分析設定</h1>
+        <h1>推し馬プラス</h1>
         <form id="analysis-form">
-            
+            <section class="hero-copy">
+                <p>あたなの推し馬券を最適化します<br>
+                <span>過去のレースから導く、あなたにとっても推しにとってもいちばん幸せな馬券の買い方をご提案します！</span></p>
+            </section>
             <section>
                 <div class="section-header">
                     <span class="step-number">01</span>
-                    <h3>キー馬選択（1頭選択）</h3>
+                    <h3>推し馬を選択（1頭のみ）</h3>
                 </div>
                 <div class="selection-grid radio-group" id="jiku-group">
                     </div>
@@ -46,7 +39,7 @@
             <section>
                 <div class="section-header">
                     <span class="step-number">02</span>
-                    <h3>ペア馬選択（複数選択可）</h3>
+                    <h3>相手の馬を選択（複数選択可）</h3>
                 </div>
                 <div class="selection-grid checkbox-group" id="aite-group">
                     </div>
@@ -165,7 +158,7 @@
                 </div>
             </section>
 
-            <button type="submit" id="submit-btn">期待値を診断する</button>
+            <button type="submit" id="submit-btn">期待値を集計する</button>
             <div class="logic-disclaimer">
                 <p>・2009年から2025年の期間にて開催されたJRAの中央レースを対象に集計しています</p>
                 <p>・同着の発生したレース、正確な払い戻しが確認できなかったレースを除いた58,391レースを母数として集計しています</p>
@@ -177,7 +170,7 @@
 
     <footer class="main-footer">
         <div class="footer-inner">
-            <p class="copyright">&copy; 2026 キー馬診断 All Rights Reserved.</p>
+            <p class="copyright">&copy; 2026 推し馬プラス All Rights Reserved.</p>
         </div>
     </footer>
 
