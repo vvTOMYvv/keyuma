@@ -440,3 +440,16 @@ button#submit-btn, .btn-back {
     .full-width { grid-column: span 1; }
     .header-inner { flex-direction: column; text-align: center; }
 }
+
+/* スマホ向けの微調整 */
+@media (max-width: 480px) {
+    .main-copy {
+        font-size: 18px; /* 全体を少し小さくして */
+    }
+    .main-copy .highlight {
+        font-size: 24px; /* プラスの部分もバランス調整 */
+    }
+    .hero-inner {
+        padding: 20px 10px; /* 余白を削って横幅を確保 */
+    }
+}
