@@ -150,11 +150,17 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     background: #fff;
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    padding: 12px 0;
     text-align: center;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
+    font-size: 14px; 
+    padding: 10px 5px;
+}
+
+.selection-item label span {
+    font-size: 10px; /* 「番人気」の文字だけ少し小さくすると数字が際立つ */
+    margin-left: 2px;
 }
 
 .selection-item input:checked + label {
@@ -289,6 +295,45 @@ button#submit-btn, .btn-back {
     margin-bottom: 4px;
     text-indent: -1em; /* 2行目以降をインデントして「・」を際立たせる */
     padding-left: 1em;
+}
+
+/* ボタンエリアを画面下部に固定（大胆な変更） */
+.sticky-action-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px 30px; /* 下側に余裕を持たせる（iPhoneのバー対策） */
+    background: rgba(255, 255, 255, 0.9); /* 少し透ける白 */
+    backdrop-filter: blur(5px); /* 背景をぼかすとお洒落 */
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+/* ボタン自体のデザイン */
+.primary-re-btn {
+    display: block;
+    max-width: 500px; /* PCで見ても広がりすぎない */
+    margin: 0 auto;
+    background: #e67e22; /* 活気のあるオレンジ（再試行を促す色） */
+    color: #fff;
+    text-align: center;
+    padding: 18px;
+    border-radius: 50px; /* 丸みを持たせてモダンに */
+    font-size: 18px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+    transition: transform 0.2s;
+}
+
+.primary-re-btn:active {
+    transform: scale(0.95); /* 押した時に少し凹む演出 */
+}
+
+/* ボタンがコンテンツを隠さないように余白を追加 */
+.container {
+    padding-bottom: 120px; 
 }
 
 .btn-back {

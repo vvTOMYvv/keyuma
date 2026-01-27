@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const div = document.createElement('div');
             div.className = 'selection-item';
             const isChecked = (i === defaultVal) ? 'checked' : '';
+            // generateGrid 関数の中の innerHTML 部分を修正
             div.innerHTML = `
                 <input type="${type}" id="${name}-${i}" name="${name}" value="${i}" ${isChecked}>
-                <label for="${name}-${i}">${i}</label>
+                <label for="${name}-${i}">${i}<span>番人気</span></label>
             `;
             container.appendChild(div);
         }
