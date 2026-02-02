@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiteGroup = document.getElementById('aite-group');
     const API_URL = 'https://netkeiba-results-759522910706.asia-northeast1.run.app';
 
-    // --- 1. グリッド選択肢の生成 ---
+    // --- 1. グリッド選択肢の生成 (index.html用) ---
     const generateGrid = (container, name, type, defaultVal = null) => {
         if (!container) return;
         for (let i = 1; i <= 18; i++) {
@@ -19,46 +19,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    generateGrid(jikuGroup, 'jiku', 'radio', 1);
-    generateGrid(aiteGroup, 'aite', 'checkbox');
+    if (jikuGroup) generateGrid(jikuGroup, 'jiku', 'radio', 1);
+    if (aiteGroup) generateGrid(aiteGroup, 'aite', 'checkbox');
 
     // --- 2. 分析実行処理 (index.html用) ---
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
+            
+            // 相手馬の選択リスト取得
             const selectedAite = Array.from(document.querySelectorAll('input[name="aite"]:checked'))
-            .map(cb => parseInt(cb.value));
+                .map(cb => parseInt(cb.value));
 
             submitBtn.innerText = "診断中...";
             submitBtn.disabled = true;
 
             const getVal = (id) => {
                 const el = document.getElementById(id);
-                // "全選択" や空文字、または初期ラベルの場合はnullを返す
-                if (!el || el.value === "全選択" || el.value === "" || el.options?.[el.selectedIndex]?.text.includes('選択')) return null;
-                return el.value;
+                if (!el) return null;
+                const val = el.value;
+                // 空文字やデフォルトのラベル、"全選択"などはnullとして扱う
+                if (val === "" || val === "全選択" || val.includes('選択')) return null;
+                return val;
             };
 
-            // メイン4（会場、コース、距離、クラス）+ 詳細6（年、月、馬場、年齢、斤量、頭数）
+            // 10項目のフィルタ条件を収集
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
-                aite_list: selectedAite, // 空配列 [] でも許容する
+                aite_list: selectedAite,
                 // メイン4
                 venue: getVal('venue'),
-                course_type: getVal('course_type'), // コース（芝・ダート）
+                course_type: getVal('course_type'),
                 distance: getVal('distance') ? parseInt(getVal('distance')) : null,
                 class: getVal('class'),
                 // 詳細6
                 year: getVal('year') ? parseInt(getVal('year')) : null,
                 month: getVal('month') ? parseInt(getVal('month')) : null,
-                track: getVal('track'),             // 馬場（良・重など）
+                track: getVal('track'),
                 age: getVal('age'),
-                race_condition: getVal('race_condition'), // 斤量
-                num_runners: getVal('num_runners') ? parseInt(getVal('num_runners')) : null // 頭数
+                race_condition: getVal('race_condition'),
+                num_runners: getVal('num_runners') ? parseInt(getVal('num_runners')) : null
             };
 
-            // nullの値を削除
+            // nullのプロパティを除去して軽量化
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
 
             try {
@@ -71,12 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error('API Error');
                 const result = await response.json();
                 
+                // 結果をローカルストレージに保存して遷移
                 localStorage.setItem('analysisResult', JSON.stringify({ input: payload, output: result }));
                 window.location.href = 'result.html';
                 
             } catch (error) {
                 console.error(error);
-                alert('データの取得に失敗しました。');
+                alert('データの取得に失敗しました。一時的な通信エラーの可能性があります。');
                 submitBtn.innerText = "期待値を診断する";
                 submitBtn.disabled = false;
             }
@@ -89,15 +94,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!storageData) return;
 
         const { input, output } = storageData;
+        const aiteCount = input.aite_list ? input.aite_list.length : 0;
 
         const setTxt = (id, val, suffix = '') => {
             const el = document.getElementById(id);
             if (el) el.innerText = (val !== undefined && val !== null) ? `${val}${suffix}` : '全選択';
         };
 
-        // 入力条件の反映（10項目）
+        // 選択された条件のバッジ反映
         setTxt('res-jiku', input.jiku, '番人気');
-        setTxt('res-pair', (input.aite_list && input.aite_list.length > 0) ? input.aite_list.join(', ') + '番人気' : 'なし');
+        setTxt('res-pair', aiteCount > 0 ? input.aite_list.sort((a,b)=>a-b).join(', ') + '番人気' : 'なし');
         setTxt('res-venue', input.venue);
         setTxt('res-course_type', input.course_type);
         setTxt('res-distance', input.distance, 'm');
@@ -108,24 +114,49 @@ document.addEventListener('DOMContentLoaded', () => {
         setTxt('res-age', input.age);
         setTxt('res-race_condition', input.race_condition);
         setTxt('res-num_runners', input.num_runners, '頭以上');
-        setTxt('res-count', output.race_count, 'レース');
+        setTxt('res-count', output.race_count, '');
 
-        // 馬券結果の反映（中央値対応）
-        const setRes = (probId, retId, medianId, hit, roi, median) => {
-            const pEl = document.getElementById(probId);
-            const rEl = document.getElementById(retId);
-            const mEl = document.getElementById(medianId);
-            if (pEl) pEl.innerText = `${((hit || 0) * 100).toFixed(2)}%`;
-            if (rEl) rEl.innerText = `${((roi || 0) * 100).toFixed(1)}`;
-            if (mEl) mEl.innerText = median ? Math.floor(median).toLocaleString() : '-';
+        /**
+         * 各馬券カードの表示制御
+         * @param {string} idPrefix IDのプレフィックス (win, ren, fuku3など)
+         * @param {number} minAiteRequired 必要な最低相手数
+         * @param {number} hit 的中率
+         * @param {number} roi 回収率
+         * @param {number} median 中央値
+         */
+        const renderResultCard = (idPrefix, minAiteRequired, hit, roi, median) => {
+            const cardEl = document.getElementById(`card-${idPrefix}`);
+            const groupEl = document.getElementById(`group-${idPrefix}`);
+            const errorEl = document.getElementById(`error-${idPrefix}`);
+            
+            const probEl = document.getElementById(`${idPrefix}-prob`);
+            const retEl = document.getElementById(`${idPrefix}-return`);
+            const medEl = document.getElementById(`${idPrefix}-median`);
+
+            if (aiteCount < minAiteRequired) {
+                // 条件（相手数）を満たさない場合：メッセージを表示してグレーアウト
+                if (cardEl) cardEl.classList.add('is-disabled');
+                if (groupEl) groupEl.style.display = 'none';
+                if (errorEl) errorEl.style.display = 'block';
+            } else {
+                // 条件を満たす場合：数値を反映
+                if (cardEl) cardEl.classList.remove('is-disabled');
+                if (groupEl) groupEl.style.display = 'flex';
+                if (errorEl) errorEl.style.display = 'none';
+
+                if (probEl) probEl.innerText = `${((hit || 0) * 100).toFixed(2)}%`;
+                if (retEl) retEl.innerText = `${((roi || 0) * 100).toFixed(1)}`;
+                if (medEl) medEl.innerText = median ? Math.floor(median).toLocaleString() : '-';
+            }
         };
 
-        setRes('win-prob', 'win-return', 'win-median', output.win_hit, output.win_roi, output.win_median);
-        setRes('place-prob', 'place-return', 'place-median', output.place_hit, output.place_roi, output.place_median);
-        setRes('ren-prob', 'ren-return', 'ren-median', output.quinella_hit, output.quinella_roi, output.quinella_median);
-        setRes('wide-prob', 'wide-return', 'wide-median', output.wide_hit, output.wide_roi, output.wide_median);
-        setRes('tan-prob', 'tan-return', 'tan-median', output.exacta_hit, output.exacta_roi, output.exacta_median);
-        setRes('fuku3-prob', 'fuku3-return', 'fuku3-median', output.trio_hit, output.trio_roi, output.trio_median);
-        setRes('fuku3tan-prob', 'fuku3tan-return', 'fuku3tan-median', output.trifecta_hit, output.trifecta_roi, output.trifecta_median);
+        // 各馬券種の表示実行
+        renderResultCard('win', 0, output.win_hit, output.win_roi, output.win_median);
+        renderResultCard('place', 0, output.place_hit, output.place_roi, output.place_median);
+        renderResultCard('ren', 1, output.quinella_hit, output.quinella_roi, output.quinella_median);
+        renderResultCard('wide', 1, output.wide_hit, output.wide_roi, output.wide_median);
+        renderResultCard('tan', 1, output.exacta_hit, output.exacta_roi, output.exacta_median);
+        renderResultCard('fuku3', 2, output.trio_hit, output.trio_roi, output.trio_median);
+        renderResultCard('fuku3tan', 2, output.trifecta_hit, output.trifecta_roi, output.trifecta_median);
     }
 });

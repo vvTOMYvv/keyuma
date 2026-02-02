@@ -503,6 +503,26 @@ button#submit-btn, .btn-back {
     box-shadow: none;
 }
 
+/* 算出不可時のカードスタイル */
+.result-card:has(.error-message[style*="display: block"]) {
+    background-color: #fcfcfc;
+    border-color: #eee;
+    opacity: 0.8;
+}
+
+.value-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* 回収率の数字を強調 */
+.main-return {
+    font-size: 28px;
+    color: var(--secondary-color);
+}
+/* 100%を超えたら赤くするなど、遊び心を入れてもいいですね */
+
 /* --- 9. レスポンシブ --- */
 @media screen and (max-width: 768px) {
     .container { padding: 20px; margin: 15px 10px; }
