@@ -267,6 +267,40 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 }
 
 /* --- 6. 診断結果表示用パーツ（追加） --- */
+/* 結果カード内のレイアウト調整 */
+.result-values {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+/* 的中率と中央値を横並びにするか、並列に見せる */
+.sub-value-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.sub-value {
+    font-size: 11px;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+/* 回収率の数字をより強調 */
+.main-return {
+    color: var(--danger-color); /* 回収率は目立つ色に */
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+.main-return::after {
+    content: '%';
+    font-size: 16px;
+    margin-left: 2px;
+}
+
 .result-card {
     background: #fff;
     border: 1px solid var(--border-color);
@@ -358,6 +392,43 @@ select {
     border: 1.5px solid var(--border-color);
     border-radius: 6px;
     font-size: 14px;
+}
+
+/* 詳細フィルタのアコーディオン設定 */
+.detail-filters {
+    margin-top: 20px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 15px;
+}
+
+.detail-summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    list-style: none; /* デフォルトの矢印を消す */
+    outline: none;
+}
+
+.detail-summary::-webkit-details-marker {
+    display: none; /* Safari用の矢印消し */
+}
+
+.detail-summary:after {
+    content: ' ＋'; /* 閉じている時の記号 */
+}
+
+details[open] .detail-summary:after {
+    content: ' －'; /* 開いている時の記号 */
+}
+
+.detail-grid {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 /* --- 8. ボタン --- */

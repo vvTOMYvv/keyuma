@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const div = document.createElement('div');
             div.className = 'selection-item';
             const isChecked = (i === defaultVal) ? 'checked' : '';
-            // generateGrid 関数の中の innerHTML 部分を修正
             div.innerHTML = `
                 <input type="${type}" id="${name}-${i}" name="${name}" value="${i}" ${isChecked}>
                 <label for="${name}-${i}">${i}<span>番人気</span></label>
@@ -35,22 +34,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const getVal = (id) => {
                 const el = document.getElementById(id);
-                if (!el || el.value === "全選択" || el.value === "") return null;
+                // "全選択" や空文字、または初期ラベルの場合はnullを返す
+                if (!el || el.value === "全選択" || el.value === "" || el.options?.[el.selectedIndex]?.text.includes('選択')) return null;
                 return el.value;
             };
 
+            // メイン4（会場、コース、距離、クラス）+ 詳細6（年、月、馬場、年齢、斤量、頭数）
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
                 aite_list: selectedAite, 
+                // メイン4
                 venue: getVal('venue'),
-                track: getVal('track'),
-                course_type: getVal('course_type'),
-                age: getVal('age'),
+                course_type: getVal('course_type'), // コース（芝・ダート）
+                distance: getVal('distance') ? parseInt(getVal('distance')) : null,
                 class: getVal('class'),
-                race_condition: getVal('race_condition'),
-                distance: getVal('distance') ? parseInt(getVal('distance')) : null
+                // 詳細6
+                year: getVal('year') ? parseInt(getVal('year')) : null,
+                month: getVal('month') ? parseInt(getVal('month')) : null,
+                track: getVal('track'),             // 馬場（良・重など）
+                age: getVal('age'),
+                race_condition: getVal('race_condition'), // 斤量
+                num_runners: getVal('num_runners') ? parseInt(getVal('num_runners')) : null // 頭数
             };
 
+            // nullの値を削除
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
 
             try {
@@ -82,41 +89,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const { input, output } = storageData;
 
-        // 補助関数: 要素にテキストをセットする
-        const setTxt = (id, val) => {
+        const setTxt = (id, val, suffix = '') => {
             const el = document.getElementById(id);
-            if (el) el.innerText = val !== undefined && val !== null ? val : '全選択';
+            if (el) el.innerText = (val !== undefined && val !== null) ? `${val}${suffix}` : '全選択';
         };
 
-        // 条件の反映 (HTMLの各IDに流し込む)
-        setTxt('res-jiku', input.jiku);
-        const pairVal = (input.aite_list && input.aite_list.length > 0) 
-            ? input.aite_list.join(', ') + '番人気' 
-            : 'なし';
-        setTxt('res-pair', pairVal);
+        // 入力条件の反映（10項目）
+        setTxt('res-jiku', input.jiku, '番人気');
+        setTxt('res-pair', (input.aite_list && input.aite_list.length > 0) ? input.aite_list.join(', ') + '番人気' : 'なし');
         setTxt('res-venue', input.venue);
         setTxt('res-course_type', input.course_type);
-        setTxt('res-distance', input.distance ? `${input.distance}m` : '全距離');
+        setTxt('res-distance', input.distance, 'm');
+        setTxt('res-class', input.class);
+        setTxt('res-year', input.year, '年');
+        setTxt('res-month', input.month, '月');
         setTxt('res-track', input.track);
         setTxt('res-age', input.age);
-        setTxt('res-class', input.class);
         setTxt('res-race_condition', input.race_condition);
-        setTxt('res-count', output.race_count || 0);
+        setTxt('res-num_runners', input.num_runners, '頭以上');
+        setTxt('res-count', output.race_count, 'レース');
 
-        // 馬券結果の反映
-        const setRes = (probId, retId, hit, roi) => {
+        // 馬券結果の反映（中央値対応）
+        const setRes = (probId, retId, medianId, hit, roi, median) => {
             const pEl = document.getElementById(probId);
             const rEl = document.getElementById(retId);
+            const mEl = document.getElementById(medianId);
             if (pEl) pEl.innerText = `${((hit || 0) * 100).toFixed(2)}%`;
             if (rEl) rEl.innerText = `${((roi || 0) * 100).toFixed(1)}`;
+            if (mEl) mEl.innerText = median ? Math.floor(median).toLocaleString() : '-';
         };
 
-        setRes('win-prob', 'win-return', output.win_hit, output.win_roi);
-        setRes('place-prob', 'place-return', output.place_hit, output.place_roi);
-        setRes('ren-prob', 'ren-return', output.quinella_hit, output.quinella_roi);
-        setRes('wide-prob', 'wide-return', output.wide_hit, output.wide_roi);
-        setRes('tan-prob', 'tan-return', output.exacta_hit, output.exacta_roi);
-        setRes('fuku3-prob', 'fuku3-return', output.trio_hit, output.trio_roi);
-        setRes('fuku3tan-prob', 'fuku3tan-return', output.trifecta_hit, output.trifecta_roi);
+        setRes('win-prob', 'win-return', 'win-median', output.win_hit, output.win_roi, output.win_median);
+        setRes('place-prob', 'place-return', 'place-median', output.place_hit, output.place_roi, output.place_median);
+        setRes('ren-prob', 'ren-return', 'ren-median', output.quinella_hit, output.quinella_roi, output.quinella_median);
+        setRes('wide-prob', 'wide-return', 'wide-median', output.wide_hit, output.wide_roi, output.wide_median);
+        setRes('tan-prob', 'tan-return', 'tan-median', output.exacta_hit, output.exacta_roi, output.exacta_median);
+        setRes('fuku3-prob', 'fuku3-return', 'fuku3-median', output.trio_hit, output.trio_roi, output.trio_median);
+        setRes('fuku3tan-prob', 'fuku3tan-return', 'fuku3tan-median', output.trifecta_hit, output.trifecta_roi, output.trifecta_median);
     }
 });

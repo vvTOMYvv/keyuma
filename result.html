@@ -28,17 +28,20 @@
                 <h3>選択した条件</h3>
             </div>
             <div class="condition-badge-container">
-                <div class="badge badge-jiku">推し馬: <span id="res-jiku">--</span>人気</div>
-                <div class="badge badge-jiku">相手の馬: <span id="res-pair">--</span></div>
+                <div class="badge badge-jiku">軸馬: <span id="res-jiku">--</span></div>
+                <div class="badge badge-jiku">相手: <span id="res-pair">--</span></div>
                 
                 <div class="badge badge-filter">会場: <span id="res-venue">--</span></div>
                 <div class="badge badge-filter">コース: <span id="res-course_type">--</span></div>
                 <div class="badge badge-filter">距離: <span id="res-distance">--</span></div>
-                <div class="badge badge-filter">馬場: <span id="res-track">--</span></div>
-                
-                <div class="badge badge-filter">年齢: <span id="res-age">--</span></div>
                 <div class="badge badge-filter">クラス: <span id="res-class">--</span></div>
+                
+                <div class="badge badge-filter">年: <span id="res-year">--</span></div>
+                <div class="badge badge-filter">月: <span id="res-month">--</span></div>
+                <div class="badge badge-filter">馬場: <span id="res-track">--</span></div>
+                <div class="badge badge-filter">年齢: <span id="res-age">--</span></div>
                 <div class="badge badge-filter">斤量: <span id="res-race_condition">--</span></div>
+                <div class="badge badge-filter">頭数: <span id="res-num_runners">--</span></div>
             </div>
         </section>
 
@@ -55,17 +58,19 @@
             </div>
 
             <div class="result-card">
-            <div class="result-label">単勝</div>
-            <div class="result-values">
-                <span class="sub-value">期待値: <span id="win-prob">--%</span></span>
-                <span class="main-return">回収率: <span id="win-return">--</span>%</span>
+                <div class="result-label">単勝</div>
+                <div class="result-values">
+                    <span class="sub-value">的中率: <span id="win-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="win-median">--</span>円</span>
+                    <span class="main-return">回収率: <span id="win-return">--</span>%</span>
+                </div>
             </div>
-        </div>
 
             <div class="result-card">
                 <div class="result-label">複勝</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="place-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="place-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="place-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="place-return">--</span>%</span>
                 </div>
             </div>
@@ -73,7 +78,8 @@
             <div class="result-card">
                 <div class="result-label">馬連</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="ren-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="ren-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="ren-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="ren-return">--</span>%</span>
                 </div>
             </div>
@@ -81,7 +87,8 @@
             <div class="result-card">
                 <div class="result-label">ワイド</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="wide-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="wide-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="wide-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="wide-return">--</span>%</span>
                 </div>
             </div>
@@ -89,7 +96,8 @@
             <div class="result-card">
                 <div class="result-label">馬単</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="tan-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="tan-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="tan-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="tan-return">--</span>%</span>
                 </div>
             </div>
@@ -97,7 +105,8 @@
             <div class="result-card">
                 <div class="result-label">3連複</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="fuku3-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="fuku3-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="fuku3-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="fuku3-return">--</span>%</span>
                 </div>
             </div>
@@ -105,7 +114,8 @@
             <div class="result-card">
                 <div class="result-label">3連単</div>
                 <div class="result-values">
-                    <span class="sub-value">期待値: <span id="fuku3tan-prob">--%</span></span>
+                    <span class="sub-value">的中率: <span id="fuku3tan-prob">--%</span></span>
+                    <span class="sub-value">中央値: <span id="fuku3tan-median">--</span>円</span>
                     <span class="main-return">回収率: <span id="fuku3tan-return">--</span>%</span>
                 </div>
             </div>
