@@ -297,7 +297,7 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 
 .main-return::after {
     content: '%';
-    font-size: 14px;
+    font-size: 16px;
     margin-left: 2px;
 }
 
