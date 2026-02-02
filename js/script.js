@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (groupEl) groupEl.style.display = 'flex';
                 if (errorEl) errorEl.style.display = 'none';
 
-                if (probEl) probEl.innerText = `${((hit || 0) * 100).toFixed(2)}%`;
+                if (probEl) probEl.innerText = `${((hit || 0) * 100).toFixed(2)}`;
                 if (retEl) retEl.innerText = `${((roi || 0) * 100).toFixed(1)}`;
                 if (medEl) medEl.innerText = median ? Math.floor(median).toLocaleString() : '-';
             }
