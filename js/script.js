@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
-            const selectedAite = Array.from(document.querySelectorAll('input[name="aite"]:checked')).map(cb => parseInt(cb.value));
+            const selectedAite = Array.from(document.querySelectorAll('input[name="aite"]:checked'))
+            .map(cb => parseInt(cb.value));
 
             submitBtn.innerText = "診断中...";
             submitBtn.disabled = true;
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // メイン4（会場、コース、距離、クラス）+ 詳細6（年、月、馬場、年齢、斤量、頭数）
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
-                aite_list: selectedAite, 
+                aite_list: selectedAite, // 空配列 [] でも許容する
                 // メイン4
                 venue: getVal('venue'),
                 course_type: getVal('course_type'), // コース（芝・ダート）
