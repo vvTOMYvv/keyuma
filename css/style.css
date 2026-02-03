@@ -241,7 +241,11 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     gap: 10px;
 }
 
-.selection-item input { position: absolute; opacity: 0; }
+.selection-item input { 
+    position: absolute; 
+    opacity: 0; 
+}
+
 .selection-item label {
     display: block;
     background: #fff;
@@ -250,21 +254,44 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     text-align: center;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); /* 動きをより滑らかに */
     font-size: 14px; 
     padding: 10px 5px;
+    position: relative;
+    top: 0; /* 位置制御用 */
 }
 
 .selection-item label span {
-    font-size: 10px; /* 「番人気」の文字だけ少し小さくすると数字が際立つ */
+    font-size: 10px;
     margin-left: 2px;
+}
+
+/* --- 改善点1：マウスホバーで浮き上がる --- */
+.selection-item label:hover {
+    border-color: var(--primary-color); /* 枠線を先に色づかせる */
+    transform: translateY(-4px); /* 上に4px浮かせる */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* 浮いた時の影 */
+    background: #f9fdfb; /* ほんの少しだけ背景を明るく */
+}
+
+/* --- 改善点2：クリックした瞬間（アクティブ）の凹み --- */
+.selection-item label:active {
+    transform: translateY(-1px); /* 押し込んだように見せる */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .selection-item input:checked + label {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    transform: translateY(-2px); /* 選択中も少し浮いた状態を維持して「選ばれてる感」を出す */
+}
+
+/* --- 改善点3：選択中にホバーしても沈まないように調整 --- */
+.selection-item input:checked + label:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(39, 174, 96, 0.4);
 }
 
 /* --- 6. 診断結果表示用パーツ（追加） --- */
