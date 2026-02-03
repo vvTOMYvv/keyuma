@@ -219,8 +219,8 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 /* 必須ラベル（赤） */
 .required-badge {
     color: #e74c3c;
-    font-size: 0.6em;
-    font-weight: bold;
+    font-size: 0.7em;
+    font-weight: normal;
     margin-left: 8px;
     vertical-align: middle;
 }
@@ -228,17 +228,8 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 /* 任意ラベル（紺） */
 .optional-badge {
     color: #2c3e50;    /* 落ち着いたネイビー */
-    font-size: 0.6em;
+    font-size: 0.7em;
     font-weight: normal; /* 任意なので太字にせず、少し控えめに */
-    margin-left: 8px;
-    vertical-align: middle;
-}
-
-/* script.jsで生成されるbadgeとの混同を避けるため、header内のbadgeとして定義 */
-.section-header .optional-badge {
-    color: #2c3e50;    /* 落ち着いたネイビー */
-    font-size: 0.65em; /* 少しだけ大きくして読みやすく */
-    font-weight: 500;  /* 標準より少しだけしっかりめに */
     margin-left: 8px;
     vertical-align: middle;
 }
