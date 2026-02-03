@@ -316,19 +316,7 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     white-space: nowrap;
 }
 
-/* 回収率の数字をより強調 */
-.main-return {
-    color: var(--danger-color); /* 回収率は目立つ色に */
-    font-size: 28px;
-    line-height: 1.2;
-}
-
-.main-return::after {
-    content: '%';
-    font-size: 16px;
-    margin-left: 2px;
-}
-
+/* カード全体の基本構造 */
 .result-card {
     background: #fff;
     border: 1px solid var(--border-color);
@@ -338,37 +326,58 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* 左側の馬券種ラベル（単勝・複勝など） */
 .result-label {
     font-weight: bold;
     color: var(--secondary-color);
     font-size: 16px;
 }
 
+/* 右側の数値グループ */
 .result-values {
     text-align: right;
 }
 
-/* 期待値（的中率）の表示：さりげなく */
-.sub-value {
-    display: block; /* 改行して回収率の上または横に配置 */
-    font-size: 12px;
-    color: #7f8c8d; /* グレーで存在感を抑える */
-    margin-bottom: 2px;
+/* 的中率・中央値の小文字グループ（控えめ） */
+.sub-value-group {
+    display: block;
+    font-size: 11px;
+    color: #95a5a6; /* 薄いグレー */
+    margin-bottom: 4px;
 }
 
-/* 回収率の表示：ここを主役に */
+.sub-value {
+    margin-left: 8px;
+}
+
+/* 【主役】回収率の表示 */
 .main-return {
     display: block;
-    font-size: 24px; /* 数字を大きく */
-    font-weight: 800;
-    color: #2c3e50; /* 濃い色でハッキリと */
+    font-size: 11px;    /* 「回収率」という文字自体のサイズ */
+    color: #7f8c8d;    /* 文字の色は抑える */
+    font-weight: normal;
 }
 
-/* 回収率の「%」だけ少し小さくするとよりプロっぽくなります */
+/* 回収率の「数字」部分（ここを最大化） */
 .main-return span {
-    font-size: 24px;
+    font-size: 32px;    /* 数字をガツンと大きく */
+    font-weight: 900;   /* 極太 */
+    color: #2c3e50;    /* 濃い色でハッキリ */
+    margin-left: 4px;
+    line-height: 1;
+    vertical-align: baseline;
+}
+
+/* CSSで「%」を付け足して、かつ数字より小さくする */
+.main-return span::after {
+    content: '%';
+    font-size: 16px;    /* 数字の半分くらいのサイズ */
+    font-weight: bold;
+    margin-left: 1px;
+    color: #7f8c8d;    /* 単位は少し薄く */
 }
 
 /* 条件バッジ（診断された条件をきれいに並べる） */
