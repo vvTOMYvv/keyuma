@@ -25,35 +25,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. 分析実行処理 (index.html用) ---
     if (form) {
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault();            
             const submitBtn = document.getElementById('submit-btn');
             
             // 相手馬の選択リスト取得
             const selectedAite = Array.from(document.querySelectorAll('input[name="aite"]:checked'))
                 .map(cb => parseInt(cb.value));
 
-            submitBtn.innerText = "診断中...";
+            // ★【修正箇所1】タイマーの変数を定義して開始する
             submitBtn.disabled = true;
+            let dotCount = 0;
+            const loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4;
+                submitBtn.innerText = "計算中" + ".".repeat(dotCount);
+            }, 300);
 
             const getVal = (id) => {
                 const el = document.getElementById(id);
                 if (!el) return null;
                 const val = el.value;
-                // 空文字やデフォルトのラベル、"全選択"などはnullとして扱う
                 if (val === "" || val === "全選択" || val.includes('選択')) return null;
                 return val;
             };
 
-            // 10項目のフィルタ条件を収集
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
                 aite_list: selectedAite,
-                // メイン4
                 venue: getVal('venue'),
                 course_type: getVal('course_type'),
                 distance: getVal('distance') ? parseInt(getVal('distance')) : null,
                 class: getVal('class'),
-                // 詳細6
                 year: getVal('year') ? parseInt(getVal('year')) : null,
                 month: getVal('month') ? parseInt(getVal('month')) : null,
                 track: getVal('track'),
@@ -62,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 num_runners: getVal('num_runners') ? parseInt(getVal('num_runners')) : null
             };
 
-            // nullのプロパティを除去して軽量化
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
 
             try {
@@ -75,14 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error('API Error');
                 const result = await response.json();
                 
-                // 結果をローカルストレージに保存して遷移
+                // ★【修正箇所2】成功時：遷移する前にタイマーを止める
+                clearInterval(loadingInterval);
                 localStorage.setItem('analysisResult', JSON.stringify({ input: payload, output: result }));
                 window.location.href = 'result.html';
                 
             } catch (error) {
                 console.error(error);
+                // ★【修正箇所3】失敗時：タイマーを止めてボタンを元に戻す
+                clearInterval(loadingInterval);
                 alert('データの取得に失敗しました。一時的な通信エラーの可能性があります。');
-                submitBtn.innerText = "期待値を診断する";
+                submitBtn.innerText = "期待値を計算する";
                 submitBtn.disabled = false;
             }
         });
@@ -145,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (errorEl) errorEl.style.display = 'none';
 
                 if (probEl) probEl.innerText = `${((hit || 0) * 100).toFixed(2)}`;
-                if (retEl) retEl.innerText = `${((roi || 0) * 100).toFixed(1)}`;
+                if (retEl) retEl.innerText = `${((roi || 0) * 100).toFixed(2)}`;
                 if (medEl) medEl.innerText = median ? Math.floor(median).toLocaleString() : '-';
             }
         };
