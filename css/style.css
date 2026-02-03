@@ -540,9 +540,8 @@ button#submit-btn, .btn-back {
 
 /* --- 9. レスポンシブ --- */
 @media screen and (max-width: 768px) {
-    h1 {
-        margin-bottom: 0 !important; /* 優先的に0にする */
-    }
+    h1 { margin-bottom: 0 !important; }
+    .section { margin-top: 30px; }
     .container { padding: 20px; margin: 15px 10px; }
     .selection-grid { grid-template-columns: repeat(3, 1fr); }
     .filter-grid { grid-template-columns: 1fr; }
