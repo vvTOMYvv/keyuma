@@ -269,14 +269,14 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 /* --- 改善点1：マウスホバーで浮き上がる --- */
 .selection-item label:hover {
     border-color: var(--primary-color); /* 枠線を先に色づかせる */
-    transform: translateY(-4px); /* 上に4px浮かせる */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* 浮いた時の影 */
+    transform: translateY(-2px); /* 上に4px浮かせる */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); /* 浮いた時の影 */
     background: #f9fdfb; /* ほんの少しだけ背景を明るく */
 }
 
 /* --- 改善点2：クリックした瞬間（アクティブ）の凹み --- */
 .selection-item label:active {
-    transform: translateY(-1px); /* 押し込んだように見せる */
+    transform: translateY(0px); /* 押し込んだように見せる */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -284,14 +284,14 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-    transform: translateY(-2px); /* 選択中も少し浮いた状態を維持して「選ばれてる感」を出す */
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.15);
+    transform: translateY(-1px); /* 選択中も少し浮いた状態を維持して「選ばれてる感」を出す */
 }
 
 /* --- 改善点3：選択中にホバーしても沈まないように調整 --- */
 .selection-item input:checked + label:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(39, 174, 96, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2);
 }
 
 /* --- 6. 診断結果表示用パーツ（追加） --- */
