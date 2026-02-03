@@ -295,26 +295,6 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 }
 
 /* --- 6. 診断結果表示用パーツ（追加） --- */
-/* 結果カード内のレイアウト調整 */
-.result-values {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-}
-
-/* 的中率と中央値を横並びにするか、並列に見せる */
-.sub-value-group {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.sub-value {
-    font-size: 11px;
-    color: var(--text-light);
-    white-space: nowrap;
-}
 
 /* カード全体の基本構造 */
 .result-card {
@@ -341,43 +321,51 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
     text-align: right;
 }
 
-/* 的中率・中央値の小文字グループ（控えめ） */
+/* 的中率・中央値のグループ（横並びで控えめに） */
 .sub-value-group {
-    display: block;
-    font-size: 11px;
-    color: #95a5a6; /* 薄いグレー */
-    margin-bottom: 4px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 6px;
 }
 
 .sub-value {
-    margin-left: 8px;
+    font-size: 14px;      /* 指定の14px */
+    color: #95a5a6;      /* 薄いグレー */
+    white-space: nowrap;
 }
 
-/* 【主役】回収率の表示 */
+/* 的中率・中央値の「数字」だけ少し色を濃く */
+.sub-value span {
+    color: #7f8c8d;
+    font-weight: bold;
+}
+
+/* 【主役】回収率の行 */
 .main-return {
     display: block;
-    font-size: 11px;    /* 「回収率」という文字自体のサイズ */
-    color: #7f8c8d;    /* 文字の色は抑える */
-    font-weight: normal;
+    font-size: 14px;      /* 「回収率」の文字も14px */
+    color: #7f8c8d;
+    font-weight: bold;
 }
 
 /* 回収率の「数字」部分（ここを最大化） */
 .main-return span {
-    font-size: 32px;    /* 数字をガツンと大きく */
-    font-weight: 900;   /* 極太 */
-    color: #2c3e50;    /* 濃い色でハッキリ */
-    margin-left: 4px;
+    font-size: 32px;      /* 数字は引き続き大きくしてインパクトを維持 */
+    font-weight: 900;
+    color: #2c3e50;
+    margin-left: 6px;
     line-height: 1;
     vertical-align: baseline;
 }
 
-/* CSSで「%」を付け足して、かつ数字より小さくする */
+/* 回収率の「%」を小さく */
 .main-return span::after {
     content: '%';
-    font-size: 16px;    /* 数字の半分くらいのサイズ */
+    font-size: 16px;
     font-weight: bold;
-    margin-left: 1px;
-    color: #7f8c8d;    /* 単位は少し薄く */
+    margin-left: 2px;
+    color: #7f8c8d;
 }
 
 /* 条件バッジ（診断された条件をきれいに並べる） */
