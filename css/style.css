@@ -351,7 +351,7 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 /* 回収率の「数字」部分（ここを最大化） */
 .main-return span {
     font-size: 32px;      /* 数字は引き続き大きくしてインパクトを維持 */
-    font-weight: 900;
+    font-weight: bold;
     color: #2c3e50;
     margin-left: 6px;
     line-height: 1;
@@ -362,6 +362,7 @@ h3 { margin: 0; font-size: 18px; color: var(--secondary-color); }
 .main-return span::after {
     content: '%';
     font-size: 16px;
+    font-weight: normal;
     margin-left: 2px;
     color: #7f8c8d;
 }
@@ -541,7 +542,7 @@ button#submit-btn, .btn-back {
 /* --- 9. レスポンシブ --- */
 @media screen and (max-width: 768px) {
     h1 { margin-bottom: 0 !important; }
-    .section { margin-top: 30px; }
+    .result-section { margin-top: 30px; }
     .container { padding: 20px; margin: 15px 10px; }
     .selection-grid { grid-template-columns: repeat(3, 1fr); }
     .filter-grid { grid-template-columns: 1fr; }
