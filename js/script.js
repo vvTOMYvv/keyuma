@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return val;
             };
 
+            // 頭数の判定ロジックを payload の直前、または中で処理
+            const runnersType = getVal('num_runners');
+
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
                 aite_list: selectedAite,
@@ -60,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 track: getVal('track'),
                 age: getVal('age'),
                 race_condition: getVal('race_condition'),
-                num_runners: getVal('num_runners') ? parseInt(getVal('num_runners')) : null
+                // ★ ここを文字列(large/medium/small)から範囲(min/max)に変換して格納
+                num_runners_min: runnersType === 'large' ? 15 : (runnersType === 'medium' ? 10 : (runnersType === 'small' ? 5 : null)),
+                num_runners_max: runnersType === 'large' ? 18 : (runnersType === 'medium' ? 14 : (runnersType === 'small' ? 9 : null))
             };
 
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
