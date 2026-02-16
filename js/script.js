@@ -48,22 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return val;
             };
 
-            // 頭数の判定ロジックを payload の直前、または中で処理
+            // 判定用の値を取得しておく
             const runnersType = getVal('num_runners');
+            const distType = getVal('distance');
 
             const payload = {
                 jiku: parseInt(document.querySelector('input[name="jiku"]:checked').value),
                 aite_list: selectedAite,
                 venue: getVal('venue'),
                 course_type: getVal('course_type'),
-                distance: getVal('distance') ? parseInt(getVal('distance')) : null,
+                distance_min: distType === 'sprint' ? 1000 : (distType === 'mile' ? 1400 : (distType === 'intermediate' ? 1900 : (distType === 'stay' ? 2500 : null))),
+                distance_max: distType === 'sprint' ? 1300 : (distType === 'mile' ? 1800 : (distType === 'intermediate' ? 2400 : (distType === 'stay' ? 5000 : null))),
+                
                 class: getVal('class'),
                 year: getVal('year') ? parseInt(getVal('year')) : null,
                 month: getVal('month') ? parseInt(getVal('month')) : null,
                 track: getVal('track'),
                 age: getVal('age'),
                 race_condition: getVal('race_condition'),
-                // ★ ここを文字列(large/medium/small)から範囲(min/max)に変換して格納
+                
                 num_runners_min: runnersType === 'large' ? 15 : (runnersType === 'medium' ? 10 : (runnersType === 'small' ? 5 : null)),
                 num_runners_max: runnersType === 'large' ? 18 : (runnersType === 'medium' ? 14 : (runnersType === 'small' ? 9 : null))
             };
