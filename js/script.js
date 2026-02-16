@@ -112,20 +112,38 @@ document.addEventListener('DOMContentLoaded', () => {
             if (el) el.innerText = (val !== undefined && val !== null) ? `${val}${suffix}` : '全選択';
         };
 
+        /* --- 追加：表示名変換用のマッピング --- */
+        const distanceMap = {
+            'sprint': 'スプリント (1000-1300m)',
+            'mile': 'マイル (1400-1800m)',
+            'intermediate': '中距離 (1900-2400m)',
+            'stay': '長距離 (2500m以上)'
+        };
+
+        const runnersMap = {
+            'large': '多頭数 (15頭以上)',
+            'medium': '中規模 (10-14頭)',
+            'small': '小頭数 (5-9頭)'
+        };
+
         // 選択された条件のバッジ反映
         setTxt('res-jiku', input.jiku, '番人気');
         setTxt('res-pair', aiteCount > 0 ? input.aite_list.sort((a,b)=>a-b).join(', ') + '番人気' : 'なし');
         setTxt('res-venue', input.venue);
         setTxt('res-course_type', input.course_type);
-        setTxt('res-distance', input.distance, 'm');
         setTxt('res-class', input.class);
         setTxt('res-year', input.year, '年');
         setTxt('res-month', input.month, '月');
         setTxt('res-track', input.track);
         setTxt('res-age', input.age);
         setTxt('res-race_condition', input.race_condition);
-        setTxt('res-num_runners', input.num_runners, '頭以上');
         setTxt('res-count', output.race_count, '');
+        // distance_min/maxではなく、localStorageに保存した時の元の選択値（distType/runnersType）を参照します
+        const rawDist = input.distance_min ? (input.distance_min === 1000 ? 'sprint' : input.distance_min === 1400 ? 'mile' : input.distance_min === 1900 ? 'intermediate' : 'stay') : null;
+        const rawRunners = input.num_runners_min ? (input.num_runners_min === 15 ? 'large' : input.num_runners_min === 10 ? 'medium' : 'small') : null;
+
+        setTxt('res-distance', rawDist ? distanceMap[rawDist] : '全距離');
+        setTxt('res-num-runners', rawRunners ? runnersMap[rawRunners] : '全頭数');
 
         /**
          * 各馬券カードの表示制御
