@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const rawRunners = input.num_runners_min ? (input.num_runners_min === 15 ? 'large' : input.num_runners_min === 10 ? 'medium' : 'small') : null;
 
         setTxt('res-distance', rawDist ? distanceMap[rawDist] : '全距離');
-        setTxt('res-num-runners', rawRunners ? runnersMap[rawRunners] : '全頭数');
+        setTxt('res-num_runners', rawRunners ? runnersMap[rawRunners] : '全頭数');
 
         /**
          * 各馬券カードの表示制御
