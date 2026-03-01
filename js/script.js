@@ -100,8 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3. 結果画面表示 (./result用) ---
-    if (window.location.pathname.includes('./result')) {
+    if (window.location.pathname.includes('/result')) {
         const storageData = JSON.parse(localStorage.getItem('analysisResult'));
+
+        // デバッグ用：データが読み込めているかコンソールで確認
+        console.log("Storage Data:", storageData);
+
+        if (!storageData) {
+            console.error("No data found in localStorage");
+            return;
+        }
+
         if (!storageData) return;
 
         const { input, output } = storageData;
