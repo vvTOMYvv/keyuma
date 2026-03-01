@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ★【修正箇所2】成功時：遷移する前にタイマーを止める
                 clearInterval(loadingInterval);
                 localStorage.setItem('analysisResult', JSON.stringify({ input: payload, output: result }));
-                window.location.href = 'result.html';
+                window.location.href = './result';
                 
             } catch (error) {
                 console.error(error);
@@ -99,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. 結果画面表示 (result.html用) ---
-    if (window.location.pathname.includes('result.html')) {
+    // --- 3. 結果画面表示 (./result用) ---
+    if (window.location.pathname.includes('./result')) {
         const storageData = JSON.parse(localStorage.getItem('analysisResult'));
         if (!storageData) return;
 
