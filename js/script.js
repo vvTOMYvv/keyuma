@@ -90,11 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 2. 計測完了後に遷移
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
-                    'event': 'result_pv', // イベント名変更
+                    'event': 'calculation',
                     'search_params': {
                         'jiku': payload.jiku,
                         'aite_count': selectedAite.length,
-                        'aite_list': selectedAite.length > 0 ? selectedAite.sort((a,b)=>a-b).join(',') : 'none',
+                        'aite_list': selectedAite.length > 0 ? selectedAite.sort((a,b)=>a-b).join('_') : 'none',
                         'venue': payload.venue || 'all',
                         'course_type': payload.course_type || 'all',
                         'track': payload.track || 'all',
