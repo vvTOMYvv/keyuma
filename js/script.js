@@ -73,27 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
 
-            // --- GTM Data Layer Push (対象レース数なし) ---
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                'event': 'result_pv',
-                'search_params': {
-                    'jiku': payload.jiku,
-                    'aite_count': selectedAite.length,
-                    'aite_list': selectedAite.length > 0 ? selectedAite.sort((a,b)=>a-b).join(',') : 'none',
-                    'venue': payload.venue || 'all',
-                    'course_type': payload.course_type || 'all',
-                    'track': payload.track || 'all',
-                    'class': payload.class || 'all',
-                    'age': payload.age || 'all',
-                    'race_condition': payload.race_condition || 'all',
-                    'distance': distType || 'all',
-                    'num_runners': runnersType || 'all',
-                    'year': payload.year || 'all',
-                    'month': payload.month || 'all'
-                }
-            });
-
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -104,16 +83,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error('API Error');
                 const result = await response.json();
                 
-                // ★【修正箇所2】成功時：遷移する前にタイマーを止める
+                // 1. 保存処理
                 clearInterval(loadingInterval);
                 localStorage.setItem('analysisResult', JSON.stringify({ input: payload, output: result }));
-                window.location.href = './result';
+
+                // 2. 計測完了後に遷移
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'result_pv', // イベント名変更
+                    'search_params': {
+                        'jiku': payload.jiku,
+                        'aite_count': selectedAite.length,
+                        'aite_list': selectedAite.length > 0 ? selectedAite.sort((a,b)=>a-b).join(',') : 'none',
+                        'venue': payload.venue || 'all',
+                        'course_type': payload.course_type || 'all',
+                        'track': payload.track || 'all',
+                        'class': payload.class || 'all',
+                        'age': payload.age || 'all',
+                        'race_condition': payload.race_condition || 'all',
+                        'distance': distType || 'all',
+                        'num_runners': runnersType || 'all',
+                        'year': payload.year || 'all',
+                        'month': payload.month || 'all'
+                    },
+                    'eventCallback': function() {
+                        window.location.href = './result';
+                    },
+                    'eventTimeout': 2000
+                });
                 
             } catch (error) {
                 console.error(error);
-                // ★【修正箇所3】失敗時：タイマーを止めてボタンを元に戻す
                 clearInterval(loadingInterval);
-                alert('データの取得に失敗しました。一時的な通信エラーの可能性があります。');
+                alert('データの取得に失敗しました。');
                 submitBtn.innerText = "期待値を計算する";
                 submitBtn.disabled = false;
             }
