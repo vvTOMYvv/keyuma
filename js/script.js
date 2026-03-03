@@ -95,9 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             try {
-                // ... fetch処理へ
-
-            try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
