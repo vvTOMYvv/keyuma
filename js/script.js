@@ -73,6 +73,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             Object.keys(payload).forEach(key => payload[key] === null && delete payload[key]);
 
+            // --- GTM Data Layer Push (対象レース数なし) ---
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'result_pv',
+                'search_params': {
+                    'jiku': payload.jiku,
+                    'aite_count': selectedAite.length,
+                    'aite_list': selectedAite.length > 0 ? selectedAite.sort((a,b)=>a-b).join(',') : 'none',
+                    'venue': payload.venue || 'all',
+                    'course_type': payload.course_type || 'all',
+                    'track': payload.track || 'all',
+                    'class': payload.class || 'all',
+                    'age': payload.age || 'all',
+                    'race_condition': payload.race_condition || 'all',
+                    'distance': distType || 'all',
+                    'num_runners': runnersType || 'all',
+                    'year': payload.year || 'all',
+                    'month': payload.month || 'all'
+                }
+            });
+
+            try {
+                // ... fetch処理へ
+
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -102,9 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. 結果画面表示 (./result用) ---
     if (window.location.pathname.includes('/result')) {
         const storageData = JSON.parse(localStorage.getItem('analysisResult'));
-
-        // デバッグ用：データが読み込めているかコンソールで確認
-        console.log("Storage Data:", storageData);
 
         if (!storageData) {
             console.error("No data found in localStorage");
